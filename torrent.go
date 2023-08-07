@@ -1418,6 +1418,7 @@ func (t *Torrent) updatePieceCompletion(piece pieceIndex) bool {
 		t.logger.Printf("marked piece %v complete but still has dirtiers", piece)
 	}
 	if changed {
+		fmt.Printf("updatePieceCompletion %s %d %t\n", t.info.Name, piece, complete)
 		log.Fstr("piece %d completion changed: %+v -> %+v", piece, cached, uncached).LogLevel(log.Debug, t.logger)
 		t.pieceCompletionChanged(piece, "Torrent.updatePieceCompletion")
 	}
@@ -2220,7 +2221,7 @@ func (t *Torrent) onPieceCompleted(piece pieceIndex) {
 	t.piece(piece).readerCond.Broadcast()
 	for conn := range t.conns {
 		conn.have(piece)
-		//t.maybeDropMutuallyCompletePeer(conn)
+		t.maybeDropMutuallyCompletePeer(conn)
 	}
 }
 
