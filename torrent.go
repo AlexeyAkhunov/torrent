@@ -1418,7 +1418,8 @@ func (t *Torrent) updatePieceCompletion(piece pieceIndex) bool {
 		t.logger.Printf("marked piece %v complete but still has dirtiers", piece)
 	}
 	if changed {
-		log.Fstr("%s piece %d completion changed: %+v -> %+v", t.info.Name, piece, cached, uncached).LogLevel(log.Debug, t.logger)
+		haveAll := t.haveAllPieces()
+		log.Fstr("%s piece %d completion changed: %+v -> %+v, all pieces now: %t", t.info.Name, piece, cached, uncached, haveAll).LogLevel(log.Debug, t.logger)
 		t.pieceCompletionChanged(piece, "Torrent.updatePieceCompletion")
 	}
 	return changed
