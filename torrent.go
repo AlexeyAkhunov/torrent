@@ -2220,7 +2220,7 @@ func (t *Torrent) onPieceCompleted(piece pieceIndex) {
 	t.piece(piece).readerCond.Broadcast()
 	for conn := range t.conns {
 		conn.have(piece)
-		t.maybeDropMutuallyCompletePeer(conn)
+		//t.maybeDropMutuallyCompletePeer(conn)
 	}
 }
 
