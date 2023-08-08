@@ -722,7 +722,7 @@ func (c *PeerConn) mainReadLoop() (err error) {
 			runSafeExtraneous(func() { torrent.Add("fast messages received when extension is disabled", 1) })
 			return fmt.Errorf("received fast extension message (type=%v) but extension is disabled", msg.Type)
 		}
-		fmt.Print("[%x] Read msg %s\n", c.PeerID, msg.Type.String())
+		fmt.Printf("[%x] Read msg %s\n", c.PeerID, msg.Type.String())
 		switch msg.Type {
 		case pp.Choke:
 			if c.peerChoking {
