@@ -437,6 +437,7 @@ func (cn *PeerConn) peerSentBitfield(bf []bool) error {
 }
 
 func (cn *PeerConn) onPeerHasAllPieces() {
+	fmt.Printf("[%x] peer has all pieces %v\n", cn.PeerID, cn.t)
 	t := cn.t
 	if t.haveInfo() {
 		cn._peerPieces.Iterate(func(x uint32) bool {
