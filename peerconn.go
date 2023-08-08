@@ -917,6 +917,7 @@ func (c *PeerConn) onReadExtendedMsg(id pp.ExtensionNumber, payload []byte) (err
 		if !c.pex.IsEnabled() {
 			return nil // or hang-up maybe?
 		}
+		fmt.Printf("[%x] pex payload %x\n", c.PeerID, payload)
 		err = c.pex.Recv(payload)
 		if err != nil {
 			err = fmt.Errorf("receiving pex message: %w", err)
