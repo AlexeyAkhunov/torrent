@@ -205,7 +205,7 @@ func (cn *PeerConn) write(msg pp.Message) bool {
 		fmt.Printf("[%x] bitfield %t\n", cn.PeerID, msg.Bitfield)
 	}
 	if msg.Type == pp.Request {
-		fmt.Printf("[%x] request index %d, begin %d, length %d\n", msg.Index, msg.Begin, msg.Length)
+		fmt.Printf("[%x] request index %d, begin %d, length %d\n", cn.PeerID, msg.Index, msg.Begin, msg.Length)
 	}
 	torrent.Add(fmt.Sprintf("messages written of type %s", msg.Type.String()), 1)
 	// We don't need to track bytes here because the connection's Writer has that behaviour injected
