@@ -201,6 +201,9 @@ func (cn *PeerConn) onClose() {
 // done asynchronously, so it may be that we're not able to honour backpressure from this method.
 func (cn *PeerConn) write(msg pp.Message) bool {
 	fmt.Printf("[%x] write message %s\n", cn.PeerID, msg.Type.String())
+	if msg.Type == pp.Bitfield {
+		fmt.Printf("[%x] bitfield %t\n", cn.PeerID, msg.Bitfield)
+	}
 	torrent.Add(fmt.Sprintf("messages written of type %s", msg.Type.String()), 1)
 	// We don't need to track bytes here because the connection's Writer has that behaviour injected
 	// (although there's some delay between us buffering the message, and the connection writer
@@ -780,6 +783,7 @@ func (c *PeerConn) mainReadLoop() (err error) {
 		case pp.Have:
 			err = c.peerSentHave(pieceIndex(msg.Index))
 		case pp.Bitfield:
+			fmt.Printf("[%x] bitfield %t\n", c.PeerID, msg.Bitfield)
 			err = c.peerSentBitfield(msg.Bitfield)
 		case pp.Request:
 			r := newRequestFromMessage(&msg)
