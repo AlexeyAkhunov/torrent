@@ -200,7 +200,7 @@ func (cn *PeerConn) onClose() {
 // Writes a message into the write buffer. Returns whether it's okay to keep writing. Writing is
 // done asynchronously, so it may be that we're not able to honour backpressure from this method.
 func (cn *PeerConn) write(msg pp.Message) bool {
-	cn.logger.WithDefaultLevel(log.Info).Print("write message %s", msg.Type.String())
+	cn.logger.Levelf(log.Info, "write message %s", msg.Type.String())
 	torrent.Add(fmt.Sprintf("messages written of type %s", msg.Type.String()), 1)
 	// We don't need to track bytes here because the connection's Writer has that behaviour injected
 	// (although there's some delay between us buffering the message, and the connection writer
@@ -1035,7 +1035,7 @@ func (c *PeerConn) setTorrent(t *Torrent) {
 		panic("connection already associated with a torrent")
 	}
 	c.t = t
-	c.logger.WithDefaultLevel(log.Info).Printf("set torrent=%v", t)
+	c.logger.Levelf(log.Info, "set torrent=%v", t)
 	t.reconcileHandshakeStats(c)
 }
 
